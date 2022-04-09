@@ -29,18 +29,18 @@
 
 
 - 이클립스 프로젝트 만들기
-
-  - File -> New -> Project...!
-  [image-20220410011759302](https://user-images.githubusercontent.com/103157377/162584751-c5811210-3cc3-44d5-afb5-f9c9b265d7d8.png)
+  - File -> New -> Project...
+  
+  ![image-20220410011759302](https://user-images.githubusercontent.com/103157377/162584751-c5811210-3cc3-44d5-afb5-f9c9b265d7d8.png)
 
 
   - Next
 
     ![image-20220410012504383](https://user-images.githubusercontent.com/103157377/162584779-d08bff3c-5bac-4c35-bfc0-d851fdeb11cb.png)
 
-  - Project name에 이름을 적고 자바 버전을 확인한 후 Finish를 누른다.!!
+  - Project name에 이름을 적고 자바 버전을 확인한 후 Finish를 누른다.
   
-  [image-20220410012753754](https://user-images.githubusercontent.com/103157377/162584832-af41ffa7-ee9c-4ad7-8329-14c8ffe16108.png)
+  ![image-20220410012753754](https://user-images.githubusercontent.com/103157377/162584832-af41ffa7-ee9c-4ad7-8329-14c8ffe16108.png)
 
 
 
@@ -55,7 +55,6 @@
 
 
 - Package 만들기
-
   - src폴더 위에 우클릭 -> New -> Package 클릭
   
   ![image-20220410013133723](https://user-images.githubusercontent.com/103157377/162584872-4416dcd4-d5c2-415d-84d8-b9fec63a4dec.png)

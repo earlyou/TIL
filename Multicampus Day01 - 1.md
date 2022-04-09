@@ -30,11 +30,13 @@
 
 - 이클립스 프로젝트 만들기
 
-  - File -> New -> Project...![image-20220410011807919](Multicampus Day01.assets/image-20220410011807919.png)
+  - File -> New -> Project...![image-20220410011759302](https://user-images.githubusercontent.com/103157377/162584751-c5811210-3cc3-44d5-afb5-f9c9b265d7d8.png)
+
 
   - Next
 
-    ![image-20220410012504383](Multicampus Day01.assets/image-20220410012504383.png)
+    ![image-20220410012504383](https://user-images.githubusercontent.com/103157377/162584779-d08bff3c-5bac-4c35-bfc0-d851fdeb11cb.png)
+
 
   - Project name에 이름을 적고 자바 버전을 확인한 후 Finish를 누른다.![image-20220410012753754](Multicampus Day01.assets/image-20220410012753754.png)
 

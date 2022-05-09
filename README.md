@@ -1,7 +1,4 @@
-# TIL
+# TIL Multicampus
 
->Today I Learned
-
-코린이가 배운걸 올리는 곳
-
-코딩은 참 재미가 있다!
+> 2022.04.04 ~ 2022.08.19
+> Multicampus "AI 플랫폼을 활용한 웹 서비스 개발" 과정을 수강하며 배운 내용을 기록

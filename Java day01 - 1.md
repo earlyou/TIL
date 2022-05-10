@@ -1,4 +1,5 @@
-# Multicampus Day01 - 1
+# Multicampus Java day01 - 1
+## 2022-04-04
 
 > 프로그래밍 언어 개요, 자바 특징
 >

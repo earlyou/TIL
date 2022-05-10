@@ -1,4 +1,5 @@
-# Multicampus Day02
+# Multicampus Java day02
+## 2022-04-05
 
 > 변수 타입
 >

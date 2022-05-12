@@ -389,6 +389,9 @@ $ git push origin master
 
    ```bash
    $ git switch login
+   
+   # 브랜치 생성과 이동을 동시에 실행 가능
+   $ git switch -c login
    ```
 
 2. test.txt를 열어보면 master-4가 지워져있다.
@@ -526,5 +529,265 @@ $ git push origin master
        1 file changed, 2 insertions(+)
       ```
 
-      
+      ![image](https://user-images.githubusercontent.com/103157377/168093918-b531379a-1b3c-4ad5-8711-652c5dc1ebb5.png)
 
+   3. hotfix가 가리키는 C4는 C2에 기반한 커밋이므로 master가 C4로 이동한다.
+
+      이렇게 따로 merge 과정 없이 브랜치의 포인터가 이동하는 것을 Fast-Foward라고 한다.
+
+   4. 병합 후 필요없는 hotfix는 삭제
+
+      ```bash
+      $ git branch -d hotfix
+      ```
+
+<br/>
+
+2. 3-Way Merge
+
+   - 브랜치를 병합할 때 각 브랜치의 커밋 2개와 공통 조상 하나를 사용하여 병합하는 것
+   - 두 브랜치에서 다른 파일 or 같은 파일의 다른 부분을 수정했을 때 가능
+
+   1. 같은 조상을 가진 다른 커밋을 한 두 브랜치
+
+      ![image](https://user-images.githubusercontent.com/103157377/168095398-64d6d332-e35c-442c-84c9-a33e4c336032.png)
+
+   2. master에 iss53 병합
+
+      ```bash
+      $ git switch master
+      
+      $ git merge iss53
+      ```
+
+   3. 두 브랜치는 갈래가 나뉘어있기 때문에 Fast-Forward로 합칠 수 없다.
+
+      C4, C5를 비교하여 3-way merge를 진행한다.
+
+      ![image](https://user-images.githubusercontent.com/103157377/168096133-8cfbeb7c-75b2-443e-ae60-f691ff5733c7.png)
+
+   4. 병합이 완료된 불필요한 iss53은 삭제
+
+      ```bash
+      $ git branch -d iss53
+      ```
+
+<br/>
+
+3. Merge Conflict
+
+   - 병합하는 두 브랜치에서 같은 파일의 부분을 수정한 경우, 병합하는 과정에서 충돌이 발생하는 현상
+   - 사용자는 수정된 두 내용 중 선택을하여 Conflict를 직접 해결해야 한다.
+
+   1. merge 전 상태
+
+      ![image](https://user-images.githubusercontent.com/103157377/168098551-2d9d351f-0de8-436b-aba1-95156ab7547c.png)
+
+   2. 만약 master와 iss53이 같은 파일의 같은 부분을 수정하고 병합한다면?
+
+      ```bash
+      # Conflict 발생
+      
+      $ git merge iss53
+      Auto-merging index.html
+      CONFLICT (content): Merge conflict in index.html
+      Automatic merge failed; fix conflicts and then commit the result.
+      ```
+
+   3. 충돌 파일 확인을 위해 `git status`실행
+
+      ```bash
+      $ git status
+      On branch master
+      You have unmerged paths.
+        (fix conflicts and run "git commit")
+      
+      Unmerged paths:
+        (use "git add <file>..." to mark resolution)
+      
+          both modified:      index.html
+      
+      no changes added to commit (use "git add" and/or "git commit -a")
+      ```
+
+   4. index.html을 열면 충돌 내역 확인 가능
+
+      ```bash
+      <<<<<<< HEAD:index.html
+      <div id="footer">contact : email.support@github.com</div>
+      =======
+      <div id="footer">
+       please contact us at support@github.com
+      </div>
+      >>>>>>> iss53:index.html
+      ```
+
+   5. `=======`위로는 master내용, 아래는 iss53내용. 이 중 하나를 선택하거나, 둘 다 선택하거나, 아예 새롭게 작성 가능
+
+      ```bash
+      <div id="footer">
+      please contact us at email.support@github.com
+      </div>
+      ```
+
+   6. 이후 `git add`와 `git commit`을 통해 병합한 내용 커밋
+
+      ```bash
+      $ git add .
+      $ git commit
+      ```
+
+   7. Vim 편집기를 통해 커밋 내역 수정 가능
+
+      ```bash
+      Merge branch 'iss53'
+      
+      Conflicts:
+          index.html
+      #
+      # It looks like you may be committing a merge.
+      # If this is not correct, please remove the file
+      #	.git/MERGE_HEAD
+      # and try again.
+      
+      
+      # Please enter the commit message for your changes. Lines starting
+      # with '#' will be ignored, and an empty message aborts the commit.
+      # On branch master
+      # All conflicts fixed but you are still merging.
+      #
+      # Changes to be committed:
+      #	modified:   index.html
+      #
+      ```
+
+   8. Vim 편집기를 통한 커밋이 C6커밋이 된다.
+
+      ![image](https://user-images.githubusercontent.com/103157377/168100467-dcb9994e-136e-4744-ac86-1b9210f77491.png)
+
+   9. iss53은 필요 없으므로 삭제
+
+      ```bash
+      $ git branch -d iss53
+      ```
+
+<br/>
+
+### 7. Git Workflow
+
+> branch를 통해 협업하는 두 가지 방법
+>
+> 1. 원격 저장소 소유권이 있는 경우(Shared repository model)
+> 2. 원격 저장소 소유권이 없는 경우(Fork & Pull model)
+
+#### 7.1 원격 저장소 소유권이 있는 경우(Shared repository model)
+
+##### 7.1.1 개념
+
+- 원격 저장소가 자신의 소유이거나 collaborator로 등록되어 있는 경우에 가능
+- master에 직접 개발하는 것이 아니라, **기능별로 브랜치를 따로 만들어서** 개발
+- `pull request`를 사용하여 팀원 간 변경 내용에 대한 소통 진행
+
+##### 7.1.2 작업 흐름
+
+1. 소유권이 있는 원격 저장소를 로컬 저장소로 `clone`
+
+   ![image](https://user-images.githubusercontent.com/103157377/168103190-c714188f-5d13-4c6b-82c9-484514869da0.png)
+
+   ```bash
+   $ git clone https://github.com/edukyle/django-project.git
+   ```
+
+2. 사용자는 자신이 작업할 기능에 대한 **브랜치 생성**, 그 안에서 기능 구현
+
+   ![image](https://user-images.githubusercontent.com/103157377/168103470-ea45cab9-7ce7-4573-8cdf-7603dba1d51c.png)
+
+   ```bash
+   $ git switch -c feature/login
+   ```
+
+3. 기능 구현이 완료되면, 원격 저장소에 해당 브랜치를 `push`한다.
+
+   ![image](https://user-images.githubusercontent.com/103157377/168103769-4d487071-9848-4762-800e-9a4410efacc5.png)
+
+   ```bash
+   $ git push origin feature/login
+   ```
+
+4. 원격 저장소에는 master와 각 기능의 브랜치가 반영됨
+
+   ![image](https://user-images.githubusercontent.com/103157377/168103906-51e447c9-52bb-451a-ace0-ab6a22c77aaa.png)
+
+5. Pull Request를 통해 브랜치를 master에 반영해달라고 요청, 코드 리뷰를 통해 소통도 가능
+
+   ![image](https://user-images.githubusercontent.com/103157377/168104185-9bb41f8c-382f-40be-90a9-e48447c3f744.png)
+
+6. 병합이 완료되면 원격 저장소에서 병합이 완료된 브랜치는 불필요하므로 삭제
+
+   ![image](https://user-images.githubusercontent.com/103157377/168104347-94683ffb-9032-4ea8-ade6-25a61ab06487.png)
+
+7. master에 브랜치가 병합되면, 각 사용자는 로컬의 master 브랜치로 이동하고 `git pull`을 한다.
+
+   ![image](https://user-images.githubusercontent.com/103157377/168104617-cf910814-6dc7-4111-8548-effbab366ef1.png)
+   ![image](https://user-images.githubusercontent.com/103157377/168104640-78839fe2-47a1-400c-ae47-1b9db60ca00a.png)
+
+   ```bash
+   $ git switch master
+   $ git pull origin master
+   ```
+
+8. 병합 완료 후, 기존 로컬 브랜치 삭제(한 사이클 종료)
+
+   ![image](https://user-images.githubusercontent.com/103157377/168104854-b8122a58-6b57-4498-92e0-5860552b03c0.png)
+
+   ```bash
+   $ git branch -d feature/login
+   ```
+
+9. 새로운 기능 추가를 위해 새로운 브랜치를 생성하며 위 과정을 반복
+
+   ![image](https://user-images.githubusercontent.com/103157377/168105021-fecd5d86-2eea-471e-a72d-afa94f1567ad.png)
+
+   ```bash
+   $ git switch -c feature/pay
+   ```
+
+<br/>
+
+#### 7.2 원격 저장소 소유권이 없는 경우(Fork & Pull model)
+
+##### 7.2.1 개념
+
+- 오픈소스 프로젝트와 같이 자신의 소유가 아닌 원격 저장소인 경우 사용
+- 원본 원격 저장소를 그대로 사용자의 원격 저장소에 복제(`fork`)
+- 기능 완성 후 push는 복제한 사용자의 원격 저장소에 진행
+- 이후 Pull Request를 통해 원본 원격 저장소에 반영될 수 있도록 요청
+
+##### 7.2.2 작업 흐름
+
+1. 소유권이 없는 원격 저장소를 `fork`를 통해 사용자의 원격 저장소로 복제
+
+   ![image](https://user-images.githubusercontent.com/103157377/168106300-9234310d-16d8-4af2-876e-68fb854dcdc3.png)
+
+   아래와 같이 Fork버튼을 누르면 자동으로 사용자의 원격 저장소에 복제
+
+   ![image](https://user-images.githubusercontent.com/103157377/168106684-f406eb33-c52f-4235-a8d9-52e3bf333978.png)
+
+2. `fork` 후 복제된 사용자의 원격 저장소를 로컬 저장소에 clone받는다.
+
+   ![image](https://user-images.githubusercontent.com/103157377/168106889-79a34d51-7f7a-4d5b-87fc-253550ea12b8.png)
+
+   ```bash
+   $ git clone https://github.com/edukyle/kakao_clone.git
+   ```
+
+3. 이후에 로컬 저장소와 원본 원격 저장소를 동기화 하기 위해 연결
+
+   ![image](https://user-images.githubusercontent.com/103157377/168107080-a16819f0-999b-4b18-b0cf-661316e21e1f.png)
+
+   ```bash
+   # 원본 원격 저장소에 대한 이름은 upstream으로 붙이는 것이 일종의 관례
+   $ git remote add upstream https://github.com/AlexKwonPro/kakao_clone.git
+   ```
+
+   

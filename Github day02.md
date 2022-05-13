@@ -790,4 +790,112 @@ $ git push origin master
    $ git remote add upstream https://github.com/AlexKwonPro/kakao_clone.git
    ```
 
-   
+4. 사용자가 작업할 기능에 대한 브랜치 생성, 그 안에서 기능 구현
+
+   ![image](https://user-images.githubusercontent.com/103157377/168190131-7502f996-c2e0-4a85-9a81-3163c8828e38.png)
+
+   ```bash
+   $ git switch -c feature/login
+   ```
+
+5. 작업이 끝나면, 복제한 원격 저장소(origin)에 해당 브랜치를 `push`
+
+   ![image](https://user-images.githubusercontent.com/103157377/168190200-b0af3c4c-3b20-4e2b-bfca-c0a58c60649a.png)
+
+   ```bash
+   $ git push origin feature/login
+   ```
+
+6. origin에는 master와 브랜치가 반영됨
+
+   ![image](https://user-images.githubusercontent.com/103157377/168190250-1935370b-01b3-4647-85b7-d32dfdc1b1bf.png)
+
+7. Pull Request를 통해 origin의 브랜치를 upstream의 master에 반영해 달라고 요청, upstream의 관리자가 코드 리뷰를 하고 반영 여부 결정
+
+   ![image](https://user-images.githubusercontent.com/103157377/168190304-aa5fe39d-7379-4000-9f28-64c6f3378524.png)
+
+8. upstream의 master에 브랜치가 병합되면 origin의 브랜치는 삭제, 로컬의 master 브랜치로 이동
+
+   ![image](https://user-images.githubusercontent.com/103157377/168190372-fac9af44-1a9a-4da8-9e27-fb51fad7cf9e.png)
+
+   ```bash
+   $ git switch master
+   ```
+
+9. 변경된 upstream의 master내용을 로컬로 `pull`, 기존 로컬 브랜치는 삭제(한 사이클 종료)
+
+   ![image](https://user-images.githubusercontent.com/103157377/168190465-626497ea-dda6-41f1-8c92-132d425a9f6e.png)
+
+   ```bash
+   $ git pull upstream master
+   $ git branch -d feature/login
+   ```
+
+<br/>
+
+#### 7.3 Pull Request(PR) 자세히 알아보기
+
+1. 브랜치를 `push`하면 Compare & pull request라는 알림 버튼이 생기는데, 이를 클릭
+
+   ![image](https://user-images.githubusercontent.com/103157377/168190683-236faeff-f930-4513-9700-15964fee1279.png)
+
+2. 혹은 원격 저장소 상단 바에서 Pull requests → New pull request를 통해서도 가능
+
+   ![image](https://user-images.githubusercontent.com/103157377/168190748-1fe3e796-e4e5-4667-b971-c1fbcd6d05cb.png)
+
+3. base: 병합될 대상. master를 base로 둔다.
+
+   compare: 병합할 대상. feature/login 브랜치를 compare로 둔다.
+
+   아래쪽에서 비교 내용 확인, Create pull request 클릭
+
+   ![image](https://user-images.githubusercontent.com/103157377/168196133-b6939b7b-ff15-4f5e-a467-e9b1b9d2b0dc.png)
+
+4. Pull Request에 대한 제목과 내용, 각종 담당자를 지정하는 페이지
+
+   모두 작성 후, Create pull request 눌러서 PR 생성
+
+   ![image](https://user-images.githubusercontent.com/103157377/168196202-cbfc20fa-9f0f-4b3e-b1ee-6178ce63356e.png)
+
+   Reviewer: 현재 PR에 대해 코드 리뷰를 진행해 줄 담당자
+
+   Assigneers: 현재 PR에 대한 작업을 맡고 있는 담당자
+
+5. PR이 생성되면 다음과 같은 화면 생성. 빨간 표시가 된 세 부분 확인
+
+   ![image](https://user-images.githubusercontent.com/103157377/168196365-504a2f19-3a86-490b-b3d3-7fbfcc24e57c.png)
+
+6. Conversation: 아래 Write부분에서 comment를 별도 작성 가능. "Merge pull request"버튼을 누르면 병합 시작.
+
+   ![image](https://user-images.githubusercontent.com/103157377/168208028-7d83b2ce-eff9-4024-948a-8973a2e2051d.png)
+
+7. Commits: PR을 통해 반영될 커밋들을 볼 수 있다.
+
+   ![image](https://user-images.githubusercontent.com/103157377/168208110-f4b56443-2e58-4bda-869b-d31ff3c2df80.png)
+
+8. Files changed: 파일의 변화 내역 확인
+
+   ![image](https://user-images.githubusercontent.com/103157377/168208151-9a1ceaf0-31ec-46f8-9673-bf051757089d.png)
+
+9. 코드리뷰을 원하는 라인에서 "+"를 눌러 해당 라인에 리뷰 남기기 가능. 빨간 사각형 안 작은 아이콘을 누르면 Suggestion 기능을 넣을 수 있다.
+
+   ![image](https://user-images.githubusercontent.com/103157377/168208299-cd6d552b-2202-497f-b1d8-c9c1de50fe4d.png)
+
+10. 코드 리뷰가 끝나면 Finish your review 클릭, 옵션을 선택하고 Submit review 클릭
+
+   ![image](https://user-images.githubusercontent.com/103157377/168208378-43f8106e-82fe-4be4-8cdd-06bd77f915a7.png)
+
+   - Comment: 추가적인 comment 작성
+   - Approve: merge를 승인하는 경우 선택
+   - Request change: 수정해야 하는 사항이 있을 경우 선택
+
+11. Conversation으로 돌아가면 리뷰가 나타난다.
+
+    ![image](https://user-images.githubusercontent.com/103157377/168208493-38ab02cd-b6dc-47f7-84a2-29e6f0abefcf.png)
+
+12. 병합을 하고 보라색으로 병합이 완료됐다고 나오면 성공
+
+    Delete branch 버튼을 통해 병합된 feature/login 브랜치 삭제 가능(origin에서만 삭제)
+
+    ![image](https://user-images.githubusercontent.com/103157377/168208611-4b5b0c7b-6151-49ca-8e7c-2739aedc878e.png)
+

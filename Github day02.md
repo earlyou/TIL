@@ -1,7 +1,8 @@
 # 깃허브 특강
 ## 2022.04.08
 
->
+> [1. Github](#1.-github)
+> [2. README.md](#2.-README.md)
 
 
 
@@ -898,4 +899,12 @@ $ git push origin master
     Delete branch 버튼을 통해 병합된 feature/login 브랜치 삭제 가능(origin에서만 삭제)
 
     ![image](https://user-images.githubusercontent.com/103157377/168208611-4b5b0c7b-6151-49ca-8e7c-2739aedc878e.png)
+    
+13. master를 확인하면 feature/login 내용이 master에 병합된 것을 확인할 수 있다.
+
+    ![image](https://user-images.githubusercontent.com/103157377/168410633-12170a38-bcbc-4f12-bd09-c75c78f15b38.png)
+
+14. 이후 로컬 저장소의 master 브랜치에서 git pull을 이용해 로컬과 원격을 동기화.
+
+15. 정리: `fork` → `clone` → 브랜치 생성 → `add` → `commit` → 브랜치 `push` → `pull&request`보내기
 

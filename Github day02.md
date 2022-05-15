@@ -3,47 +3,47 @@
 
 > [1. Github](#1-github)<br/>
 >
-> ​	[1.1 원격 저장소(Remote Repository)](#11-원격-저장소remote-repository)<br/>
+> ​		[1.1 원격 저장소(Remote Repository)](#11-원격-저장소remote-repository)<br/>
 >
-> ​	[1.2 Github에서 원격 저장소 생성](#12-github에서-원격-저장소-생성)<br/>
+> ​		[1.2 Github에서 원격 저장소 생성](#12-github에서-원격-저장소-생성)<br/>
 >
-> ​	[1.3 로컬 저장소와 원격 저장소 연결](#13-로컬-저장소와-원격-저장소-연결)<br/>
+> ​		[1.3 로컬 저장소와 원격 저장소 연결](#13-로컬-저장소와-원격-저장소-연결)<br/>
 >
-> ​	[1.4 원격 저장소에 업로드](#14-원격-저장소에-업로드)<br/>
+> ​		[1.4 원격 저장소에 업로드](#14-원격-저장소에-업로드)<br/>
 >
 > [2. README.md](#2-readmemd)<br/>
 >
-> ​	[2.1 README.md란?](#21-readmemd란)<br/>
+> ​		[2.1 README.md란?](#21-readmemd란)<br/>
 >
-> ​	[2.2 README.md파일 push하기](#22-readmemd파일-push하기)<br/>
+> ​		[2.2 README.md파일 push하기](#22-readmemd파일-push하기)<br/>
 >
 > [3. `.gitignore`](#3-gitignore)<br/>
 >
-> ​	[3.1 `.gitignore`](#31-gitignore)
+> ​		[3.1 `.gitignore`](#31-gitignore)
 >
-> ​	[3.2 `.gitignore` 심화 내용](#32-gitignore-심화-내용)
+> ​		[3.2 `.gitignore` 심화 내용](#32-gitignore-심화-내용)
 >
 > [4. clone, pull](#4-clone-pull)<br/>
 >
-> ​	[4.1 원격 저장소 가져오기](#41-원격-저장소-가져오기)
+> ​		[4.1 원격 저장소 가져오기](#41-원격-저장소-가져오기)
 >
 > [5. branch](#5-branch)<br/>
 >
-> ​	[5.1 Branch](#51-branch)
+> ​		[5.1 Branch](#51-branch)
 >
-> ​	[5.2 Branch 실습](#52-branch-실습)
+> ​		[5.2 Branch 실습](#52-branch-실습)
 >
 > [6. Branch-merge](#6-branch-merge)<br/>
 >
-> ​	[6.1 Branch Merge](#61-branch-merge)
+> ​		[6.1 Branch Merge](#61-branch-merge)
 >
 > [7. Git Workflow](#7-git-workflow)<br/>
 >
-> ​	[7.1 원격 저장소 소유권이 있는 경우(Shared repository model)](#71-원격-저장소-소유권이-있는-경우shared-repository-model)
+> ​		[7.1 원격 저장소 소유권이 있는 경우(Shared repository model)](#71-원격-저장소-소유권이-있는-경우shared-repository-model)
 >
-> ​	[7.2 원격 저장소 소유권이 없는 경우(Fork & Pull model)](#72-원격-저장소-소유권이-없는-경우fork--pull-model)
+> ​		[7.2 원격 저장소 소유권이 없는 경우(Fork & Pull model)](#72-원격-저장소-소유권이-없는-경우fork--pull-model)
 >
-> ​	[7.3 Pull Request(PR) 자세히 알아보기](#73-pull-requestpr-자세히-알아보기)
+> ​		[7.3 Pull Request(PR) 자세히 알아보기](#73-pull-requestpr-자세히-알아보기)
 
 
 

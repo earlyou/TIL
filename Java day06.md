@@ -1,4 +1,4 @@
-# Multicampus Java day05
+# Multicampus Java day06
 
 ## 2022-04-14
 

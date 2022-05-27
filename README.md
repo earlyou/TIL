@@ -29,7 +29,7 @@
 
 ## MySQL 학습
 
-## HTML5 학습
+## Web학습
 
 |    days    |    date    | link |
 | :--------: | :--------: | :--: |
@@ -45,6 +45,7 @@
 | Web days10 | 2022-05-24 |      |
 | Web days11 | 2022-05-25 |      |
 
+<br>
 
+## Spring 학습
 
-## JavaScript 학습

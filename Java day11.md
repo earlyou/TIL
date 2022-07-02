@@ -1,8 +1,30 @@
-# Multicampus Java day11
+## Multicampus Java day11
 
 ## 2022-04-21
 
+>[1. 다중 인터페이스 구현 클래스](#1-다중-인터페이스-구현-클래스)
 >
+>[2. 예외 처리](#2-예외-처리)
+>
+>​	[2.1 예외와 예외 클래스](#21-예외와-예외-클래스)
+>
+>​	[2.2 예외 처리 코드](#22-예외-처리-코드)
+>
+>​	[2.3 예외 종류에 따른 처리 코드](#23-예외-종류에-따른-처리-코드)
+>
+>​	[2.4 예외 떠넘기기](#24-예외-떠넘기기)
+>
+>​	[2.5 사용자 정의 예외와 예외 발생](#25-사용자-정의-예외와-예외-발생)
+>
+>​	[2.6 예외 정보 얻기](#26-예외-정보-얻기)
+>
+>[3. 실습](#3-실습)
+>
+>​	[3.1 예외 처리](#31-예외-처리)
+>
+>​	[3.2 사용자 정의 예외, 예외 떠넘기기](#32-사용자-정의-예외-예외-떠넘기기)
+>
+>​	[3.3 UI 만들기](#33-ui-만들기)
 
 <br>
 
@@ -83,26 +105,389 @@ public class 구현클래스명 implements 인터페이스A, 인터페이스B {
 
 - 하나의 `catch`블록에서 여러 `Exception` 처리 가능
 
-![image](https://user-images.githubusercontent.com/103157377/172956734-b2954764-4778-455a-af44-977fbe6c17fa.png)
+  ![image](https://user-images.githubusercontent.com/103157377/172956734-b2954764-4778-455a-af44-977fbe6c17fa.png)
 
 <br>
 
 #### 2.4 예외 떠넘기기
 
 - `try-catch`블록으로 예외 처리하지 않고, 메소드를 호출한 곳으로 예외 떠넘기기 가능
+
 - `throws`키워드로 예외 떠넘기기
 
-```java
-리턴타입 메소드명(매개변수,⋯) throws 예외클래스1, 예외클래스2, ⋯ {
-    
-}
-```
+  ```java
+  리턴타입 메소드명(매개변수,⋯) throws 예외클래스1, 예외클래스2, ⋯ {
+      ⋯
+  }
+  ```
 
 - 발생할 수 있는 Exception 종류별로 `throws`할 수 있지만, `throws Exception`만으로 모든 예외 떠넘기기 가능
 
-```java
-리턴타입 메소드명(매개변수,⋯) throws Exception {
-    
-}
-```
+- ```java
+  리턴타입 메소드명(매개변수,⋯) throws Exception {
+      ⋯
+  }
+  ```
+
+- `throws` 키워드가 붙은 메소드는 반드시 `try` 블록 내에서 호출되어야 한다.
+
+- `catch` 블록에서 떠넘겨 받은 예외를 처리한다,
+
+  ```java
+  public void method1() {
+      try {
+          method2();
+      } catch(ClassNotFoundException e) {
+          // 예외 처리 코드
+          System.out.println("클래스가 존재하지 않습니다.");
+      }
+  }
+  
+  public void method2() throws ClassNotFoundException {
+      Class clazz = Class.forName("java.lang.String2");
+  }
+  ```
+
+<br>
+
+#### 2.5 사용자 정의 예외와 예외 발생
+
+- 자바 표준 API에서 제공하는 예외 클래스만으로는 다양한 종류의 예외 표현이 제한적
+- 애플리케이션 서비스와 관련된 예외를 애플리케이션 예외(Application Exception)
+- 사용자 정의 예외라고도 한다.
+
+##### 2.5.1 사용자 정의 예외 클래스 선언
+
+- 일반 예외는 `Exception` 상속
+
+- 실행 예외는 `RuntimeException` 상속
+
+  ```java
+  public class XXXException extends [ Exception | RuntimeException ] {
+      public XXXException() {}
+      public XXXException(String message) { super(message); }
+  }
+  ```
+
+<br>
+
+##### 2.5.2 예외 발생시키기
+
+- 코드에서 사용자 정의 예외 발생시키는 방법
+
+  ```java
+  throw new XXXException();
+  throw new XXXException("메시지");
+  ```
+
+- 메소드 내부에서 `try-catch`블록으로 예외를 처리할 수 있다.
+
+- 하지만 대부분은 자신을 호출한 곳에서 예외 처리하도록 `throws` 키워드로 떠넘긴다.
+
+  ```java
+  public void method() throws XXXException {
+      throw new XXXException("메시지");
+  }
+  ```
+
+- 메소드는 호출한 곳에서 예외처리
+
+  ```java
+  try {
+      method();
+  } catch(XXXException e) {
+      // 예외 처리
+  }
+  ```
+
+<br>
+
+#### 2.6 예외 정보 얻기
+
+- `try`블록에서 예외 발생하면 예외 객체는 `catch`블록의 매개 변수에서 참조하므로 변수를 이용하면 예외 객체 정보 얻기 가능
+
+- 모든 예외 객체는 Exception 클래스 상속, Exception이 갖는 메소드들은 모든 예외 객체에서 호출 가능
+
+- 가장 많이 쓰는 메소드는 `getMessage()`, `printStackTrace()`
+
+  ```java
+  try{
+      // 예외 객체 생성
+  } catch(Exception e) {
+      // 예외가 갖는 Message 얻기
+      String message = e.getMessage();
+      
+      // 예외의 발생 경로 추적
+      e.printStackTrace();
+  }
+  ```
+
+<br>
+
+### 3. 실습
+
+#### 3.1 예외 처리
+
+##### 3.1.1 예외 발생과 처리
+
+- 예외 발생 예시
+
+- java day11/p422/Ex1.java
+
+  ```java
+  public class Ex1 {
+      public static void main(String[] args) {
+          Scanner sc = new Scanner(System.in);
+          System.out.println("Input Number");
+          String num = sc.next();			// 사용자가 숫자 입력
+          int n = Integer.parseInt(num);	// 입력 값을 Integer로 변경
+          System.out.println(n);			// 입력 숫자 출력
+          sc.close();
+      }
+  }
+  ```
+
+- 실행을 하고 숫자가 아닌 영문이나 한글을 입력하면
+
+- `Integer.parseInt(num);`구문에서 `NumberFormationException`이 발생한다.
+
+  ```console
+  Input number
+  a
+  
+  Exception in thread "main" java.lang.NumberFormationException: For input String : "a"
+  ```
+
+- 예외 처리 예시
+
+  ```java
+  public class Ex1 {
+      public static void main(String[] args) {
+          Scanner sc = new Scanner(System.in);
+          System.out.println("Input Number");
+          String num = sc.next();			// 사용자가 숫자 입력
+          int n = 0;
+          try {
+              n = Integer.parseInt(num);	// 입력 값을 Integer로 변경
+          } catch(NumberFormationException e) {
+              System.out.println("숫자가 아닙니다.");
+          }
+          System.out.println(n);			// 입력 숫자 출력
+          sc.close();
+      }
+  }
+  ```
+
+- `try-catch` 안에서 선언된 변수는 local variable이기 때문에 `try-catch`블록 밖에서는 사용할 수 없다. 따라서 `n`을 `try-catch`블록 밖에서 선언
+
+- 실행 하고 숫자가 아닌 문자 입력
+
+  ```console
+  Input number
+  d
+  숫자가 아닙니다.
+  0
+  ```
+
+<br>
+
+##### 3.1.2 `try-catch`블록 다중 사용
+
+- java day11/p422/Ex3.java
+
+  ```java
+  public class Ex2 {	// 예외 상황 Exception
+  
+  	public static void main(String[] args) {
+  		Scanner sc = new Scanner(System.in);
+  		System.out.println("Input number");
+  		String num = sc.next();
+  		int n = 0;
+  		int result = 0;
+  		try {
+  			n = Integer.parseInt(num);
+  			result = 100 / n;
+  			System.out.println(result);
+  		}catch(ArithmeticException e) {
+  			System.out.println("분모가 0입니다.");
+  		}catch(NumberFormatException e) {
+  			System.out.println("숫자가 아닙니다.");
+  		}finally {
+  			sc.close();
+  			System.out.println("end");
+  		}
+  	}
+  
+  }
+  ```
+
+- 예상되는 `Exception`에 따라 다르게 `catch`블록을 여러 번 쓸 수 있다.
+
+<br>
+
+#### 3.2 사용자 정의 예외, 예외 떠넘기기
+
+- 은행 시스템 같은 경우, 잔액보다 큰 금액을 출금 하거나, 음수의 값을 입금할 때, `Exception`이 발생하도록 제어하고 싶지만
+
+- 자바 API에서는 이러한 `Exception`을 제공해주지 않는다.
+
+- 따라서 개발자가 직접 `Exception`을 만들어 `throws` 해줘야 한다.
+
+- Java day11/bank/MinusException.java, OverdrawnException.java
+
+  ```java
+  public class MinusException extends Exception {
+  	public MinusException() { }
+  	public MinusException(String msg) { super(msg); }
+  }
+  
+  public class OverdrawnException extends Exception {
+  	public OverdrawnException() { }
+  	public OverdrawnException(String msg) { super(msg); }
+  }
+  ```
+
+- 예외 떠넘기기
+
+- Java day11/bank/Account.java
+
+  ```java
+  public class Account {
+  	// Fields
+  	private String accNo;
+  	private double balance;
+  
+  	// Constructors
+  	public Account() {
+  	}
+  	public Account(String accNo) {
+  		this.accNo = accNo;
+  	}
+  	public Account(String accNo, double balance) {
+  		this.accNo = accNo;
+  		this.balance = balance;
+  	}
+  	
+  	// Getter & Setter
+  	public String getAccNo() {
+  		return accNo;
+  	}
+  	public double getBalance() {
+  		return balance;
+  	}
+  	
+  	// Operation
+  	// 출금 금액이 1보다 작으면 안된다.
+  	// 출금 금액이 잔액보다 많으면 안된다.
+  	public void deposit(double money) throws Exception {
+  		if(money < 1) {
+  			throw new MinusException("마이너스입니다.");
+  		}
+  		this.balance += money;
+  	}
+  	public void withdraw(double money) throws MinusException, OverdrawnException {		
+  		if(money < 1) {
+  			throw new MinusException("음수입니다.");
+  		}
+  		if(this.balance < money) {				
+  			throw new OverdrawnException("잔액부족");
+  		}
+  		this.balance -= money;
+  	}
+  	public double select() {
+  		return this.balance;
+  	}
+  
+      // toString
+  	@Override
+  	public String toString() {
+  		return "Account [accNo=" + accNo + ", balance=" + balance + "]";
+  	}
+  }
+  ```
+
+- Account 클래스 내부 메서드에서 `throws`를 이용해`Exception`을 떠넘기도록 할 수 있다.
+
+- Java day11/bank/BankApp.java
+
+  ```java
+  public class BankApp {
+  
+  	public static void main(String[] args) {
+  		Account acc = new Account("1111", 10000);
+  		try {
+  			acc.deposit(-100);
+  		} catch (Exception e) {
+  			System.out.println(e.getMessage());
+  		}
+  		
+  		try {
+  			acc.withdraw(1000);
+  		} catch (MinusException | OverdrawnException e) {
+  			System.out.println(e.getMessage());
+  		}
+  		System.out.println(acc);
+  	}
+  }
+  ```
+
+<br>
+
+#### 3.3 UI 만들기
+
+- Java day11/awt/MyFrame.java
+
+  ```java
+  public class MyFrame {
+  	// Field
+  	Frame f;
+  	Button b;
+  	
+  	// Constructor
+  	public MyFrame() {
+  		f = new Frame("My Frame");
+  		b = new Button("Click");
+  		b.addActionListener(new ActionListener() {
+  			
+  			@Override
+  			public void actionPerformed(ActionEvent e) {
+  				b.setLabel("Clicked");
+  			}
+  		});
+  	}
+  	
+  	// Method
+  	public void setView() {
+  		f.add(b, "North");	// 북쪽에 버튼 달기
+  		f.setSize(300,200);	// 사이즈
+  		f.setVisible(true);	// 화면에 보여져라
+  		f.addWindowListener(new WindowAdapter() {
+  			@Override
+  			public void windowClosing(WindowEvent e) {
+  				System.exit(0);
+  			}
+  			
+  		});
+  	}
+  }
+  ```
+
+- Java day11/awt/App.java
+
+  ```java
+  public class App {
+  
+  	public static void main(String[] args) {
+  		MyFrame m = new MyFrame();		// 객체 생성
+  		m.setView();					// 객체 행위
+  	}
+  
+  }
+  ```
+
+- 모바일 어플리케이션 만들 때 많이 쓴다.
+
+  ![image](https://user-images.githubusercontent.com/103157377/176991631-60e7d878-7f94-4244-a635-051b5db7812b.png)
+
+  
 

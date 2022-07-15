@@ -3,9 +3,9 @@
 > 2022.04.04 ~ 2022.08.19
 > Multicampus "AI 플랫폼을 활용한 웹 서비스 개발" 과정을 수강하며 배운 내용을 기록
 
-## Java 학습
+## Java
 
-|  projects  |    date    |                             link                             |
+|  project name  |    date    |                             link                             |
 | :--------: | :--------: | :----------------------------------------------------------: |
 | Java day01 | 2022-04-04 | [day01/src](https://github.com/earlyou/Multicampus-Java/tree/master/day01/src) |
 | Java day02 | 2022-04-05 | [day02/src](https://github.com/earlyou/Multicampus-Java/tree/master/day02/src) |
@@ -25,11 +25,11 @@
 
 <br>
 
-## Github 학습
+## Github
 
-## MySQL 학습
+## MySQL
 
-## Web학습
+## HTML5, JavaScript, CSS
 
 |    days    |    date    | link |
 | :--------: | :--------: | :--: |
@@ -47,5 +47,8 @@
 
 <br>
 
-## Spring 학습
+## Spring
 
+## NCP(Naver Cloud Platform), Naver AI Platform
+
+## Linux(CentOs 7)

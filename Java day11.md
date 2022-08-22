@@ -485,7 +485,7 @@ public class 구현클래스명 implements 인터페이스A, 인터페이스B {
   }
   ```
 
-- 모바일 어플리케이션 만들 때 많이 쓴다.
+- 모바일 어플리케이션 만들 때 많이 쓴다. 
 
   ![image](https://user-images.githubusercontent.com/103157377/176991631-60e7d878-7f94-4244-a635-051b5db7812b.png)
 

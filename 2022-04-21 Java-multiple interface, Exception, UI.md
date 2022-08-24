@@ -486,3 +486,260 @@ public class 구현클래스명 implements 인터페이스A, 인터페이스B {
 - 모바일 어플리케이션 만들 때 많이 쓴다. 
   
   ![image](https://user-images.githubusercontent.com/103157377/176991631-60e7d878-7f94-4244-a635-051b5db7812b.png)
+
+<br>
+
+#### 3.4 다중 인터페이스 구현
+
+![image](https://user-images.githubusercontent.com/103157377/186331002-f1a4ae61-b2d5-45cc-a160-078a6f1cb124.png)
+
+- Java day11/ws/BookVO.java
+
+  ```java
+  public class BookVO {
+  	// Field
+  	private String isdn;
+  	private String bname;
+  	private String aname;
+  	
+  	// Constructor
+  	public BookVO() {
+  	}
+  	public BookVO(String isdn, String bname, String aname) {
+  		this.isdn = isdn;
+  		this.bname = bname;
+  		this.aname = aname;
+  	}
+  
+  	// Getter & Setter
+  	public String getIsdn() {
+  		return isdn;
+  	}
+  	public String getBname() {
+  		return bname;
+  	}
+  	public String getAname() {
+  		return aname;
+  	}
+  	public void setBname(String bname) {
+  		this.bname = bname;
+  	}
+  	public void setAname(String aname) {
+  		this.aname = aname;
+  	}
+  	
+  	
+  	@Override
+  	public String toString() {
+  		return "BookVO [isdn=" + isdn + ", bname=" + bname + ", aname=" + aname + "]";
+  	}
+  	
+  }
+  ```
+
+- Java day11/ws/Search.java
+
+  ```java
+  public interface Search {
+  	public ArrayList<BookVO> search(String bname) throws NotFoundException;
+  }
+  ```
+
+- Java day11/ws/DAO.java
+
+  ```java
+  public interface DAO {
+  	public void insert(BookVO b) throws DuplicatedIDException;
+  	public void delete(String isdn) throws NotFoundException;
+  	public BookVO update(String isdn, String bname, String aname) throws NotFoundException;
+  	public BookVO select(String bname) throws NotFoundException;
+  	public ArrayList<BookVO> select() throws NotFoundException;
+  }
+  ```
+
+- Java day11/ws/OracleDAO.java
+
+  ```java
+  public class OracleDAO implements DAO, Search {
+  	
+  	HashMap<String, BookVO> map;
+  	
+  	// Constructor
+  	public OracleDAO() {
+  		map = new HashMap<String, BookVO>();
+  	}
+  
+  	@Override
+  	public ArrayList<BookVO> search(String bname) throws NotFoundException {
+  		ArrayList<BookVO> list = new ArrayList<BookVO>();
+  		if(map.size() == 0) {
+  			throw new NotFoundException("책 정보가 없습니다.\n");
+  		}
+  		Collection<BookVO> col = map.values();
+  		Iterator<BookVO> it = col.iterator();
+  		
+  		while(it.hasNext()) {
+  			BookVO b = it.next();
+  			if(b.getBname().equals(bname)) {
+  				list.add(b);
+  			}
+  		}
+  		
+  		return list;
+  	}
+  
+  	@Override
+  	public void insert(BookVO b) throws DuplicatedIDException {
+  		String key = b.getIsdn();
+  		if(map.containsKey(key)) {
+  			throw new DuplicatedIDException("중복된 ID가 있습니다.\n");
+  		}
+  		map.put(key, b);
+  	}
+  
+  	@Override
+  	public void delete(String isdn) throws NotFoundException {
+  		if(!map.containsKey(isdn)) {
+  			throw new NotFoundException("책을 찾을 수 없습니다.\n");
+  		}
+  		map.remove(isdn);
+  	}
+  
+  	@Override
+  	public BookVO update(String isdn, String bname, String aname) throws NotFoundException {
+  		BookVO b = map.get(isdn);
+  		if(!map.containsKey(isdn)) {
+  			throw new NotFoundException("책을 찾을 수 없습니다.\n");
+  		}
+  		b.setBname(bname);
+  		b.setAname(aname);
+  		return b;
+  	}
+  
+  	@Override
+  	public BookVO select(String bname) throws NotFoundException {
+  		BookVO b = null;
+  		if(!map.containsKey(bname)) {
+  			throw new NotFoundException("책을 찾을 수 없습니다.");
+  		}
+  		b = map.get(bname);
+  		return b;
+  	}
+  
+  	@Override
+  	public ArrayList<BookVO> select() throws NotFoundException {
+  		ArrayList<BookVO> list = new ArrayList<BookVO>();
+  		
+  		if(map.size() == 0) {
+  			throw new NotFoundException("책을 찾을 수 없습니다.");
+  		}
+  		
+  		Collection<BookVO> col = map.values();
+  		Iterator<BookVO> it = col.iterator();
+  		
+  		while(it.hasNext()) {
+  			BookVO book = it.next();
+  			list.add(book);
+  		}
+  		
+  		return list;
+  	}
+  
+  }
+  ```
+
+- Java day11/ws/BookApp.java
+
+  ```java
+  public class BookApp {
+  
+  	public static void main(String[] args) {
+  		System.out.println("도서관 프로그램을 시작합니다.");
+  		OracleDAO oracledao = new OracleDAO();
+  		DAO dao = oracledao;
+  		Search search = oracledao;
+  		Scanner sc = new Scanner(System.in);
+  		
+  		while(true) {
+  			System.out.println("\n이용하실 서비스를 입력해주세요.\n"
+  					+ "(insert, delete, update, select, all, search, quit)");
+  			String cmd = sc.next();
+  			
+  			if(cmd.equals("insert")) {
+  				System.out.println("새로운 ISBN을 입력해주세요.");
+  				String isdn = sc.next();
+  				System.out.println("새로운 책 이름을 입력해주세요.");
+  				String bname = sc.next();
+  				System.out.println("책의 저자를 입력해주세요.");
+  				String aname = sc.next();
+  				
+  				BookVO b = new BookVO(isdn, bname, aname);
+  				try {
+  					dao.insert(b);
+  				} catch (DuplicatedIDException e) {
+  					System.out.println(e.getMessage());
+  				}
+  			}else if(cmd.equals("delete")) {
+  				System.out.println("삭제할 책의 ISDN을 입력하세요.");
+  				String isdn = sc.next();
+  				try {
+  					dao.delete(isdn);
+  				}catch (NotFoundException e) {
+  					System.out.println(e.getMessage());
+  				}
+  			}else if(cmd.equals("update")) {
+  				System.out.println("수정할 책의 ISDN을 입력해주세요.");
+  				String isdn = sc.next();
+  				System.out.println("책의 이름을 수정해주세요.");
+  				String bname = sc.next();
+  				System.out.println("책의 저자를 수정해주세요.");
+  				String aname = sc.next();
+  				try {
+  					BookVO b = dao.update(isdn, bname, aname);
+  					System.out.println("책 정보가 수정되었습니다.\n"+b);
+  				} catch (NotFoundException e) {
+  					System.out.println(e.getMessage());
+  				}
+  			}else if(cmd.equals("select")) {
+  				System.out.println("조회하고 싶은 책의 ISDN을 입력해주세요.");
+  				String isdn = sc.next();
+  				try {
+  					BookVO b = dao.select(isdn);
+  					System.out.println(b);
+  				}catch(NotFoundException e) {
+  					System.out.println(e.getMessage());
+  				}
+  			}else if(cmd.equals("all")) {
+  				System.out.println("모든 책 리스트를 출력합니다.\n");
+  				try {
+  					ArrayList<BookVO> list = dao.select();
+  					for (BookVO b : list) {
+  						System.out.println(b);
+  					}
+  				} catch (NotFoundException e) {
+  					System.out.println(e.getMessage());
+  				}
+  			}else if(cmd.equals("search")) {
+  				System.out.println("찾고싶은 책의 이름을 입력해주세요.");
+  				String bname = sc.next();
+  				try {
+  					ArrayList<BookVO> list = search.search(bname);
+  					for (BookVO b : list) {
+  						System.out.println(b);
+  					}
+  				} catch (NotFoundException e) {
+  					System.out.println(e.getMessage());
+  				}
+  			}else if(cmd.equals("quit")) {
+  				System.out.println("프로그램을 종료합니다.");
+  				sc.close();
+  				break;
+  			}
+  		}
+  		
+  	}
+  
+  }
+  ```
+
+  

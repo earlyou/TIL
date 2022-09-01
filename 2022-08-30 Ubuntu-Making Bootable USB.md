@@ -2,7 +2,7 @@
 
 ## 2022-08-30
 
-
+<br/>
 
 ### 1. 접속하기
 
@@ -15,13 +15,13 @@
 
 ​	![image](https://user-images.githubusercontent.com/103157377/187905340-71520efd-b19a-4bf4-9082-f1a66bec03ea.png)
 
-
+<br/>
 
 ### 2. USB 삽입, 백업
 
 - USB를 데스크탑에 삽입하고 들어있는 파일을 꼭 백업한다.
 
-
+<br/>
 
 ### 3. Rufus 다운 받기
 
@@ -34,7 +34,7 @@
 
 ​	![image](https://user-images.githubusercontent.com/103157377/187905990-e010ff98-4250-4562-8f45-152aea1d5021.png)
 
-
+<br/>
 
 ### 4. 부팅 USB 만들기
 
@@ -60,9 +60,9 @@
 
 ​	![image](https://user-images.githubusercontent.com/103157377/187907175-5d3fd19c-4cd5-4b36-b15b-cb4b179425bb.png)
 
-​	![image-20220901205219770](C:\Users\vlshz\AppData\Roaming\Typora\typora-user-images\image-20220901205219770.png)
+​	![image](https://user-images.githubusercontent.com/103157377/187909035-3077d44d-7cd9-4108-b233-c5ef57045e1a.png)
 
-
+<br/>
 
 ### 5. 확인
 

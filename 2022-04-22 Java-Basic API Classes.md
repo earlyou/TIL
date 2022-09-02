@@ -271,4 +271,166 @@
 
 #### 1.3 java.time 패키지
 
-- Java 7 이전까지 
+- Java 7 이전까지는 `Date` 와 `Calender`클래스를 이용해서 날짜와 시간 정보 제어
+- Java 7 이후 `Date`의 대부분의 메소드는 Deprecated
+- `Calender`클래스는 날짜와 시간 조작과 비교가 불가능
+- Java 8부터는 날짜와 시간을 나타내는 여러 API를 새롭게 추가
+
+| 패키지             | 설명                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| java.time          | 날짜와 시간을 나타내는 핵심 API인 LocalDate, LocalTime, LocalDateTime, ZonedDateTime포함, ISO-8601에 정의된 달력 시스템 |
+| java.time.chrono   | ISO-8601에 정의된 달력 시스템 외 다른 달력 시스템이 필요할 때 사용할 수 있는 API들 포함 |
+| java.time.format   | 날짜와 시간을 파싱하고 포맷팅하는 API들 포함                 |
+| java.time.temporal | 날짜와 시간을 연산하기 위한 보조 API들 포함                  |
+| java.time.zone     | 타임존을 지원하는 API들 포함                                 |
+
+<br/>
+
+##### 1.3.1 날짜와 시간 객체 생성
+
+- java.time 패키지의 5가지 클래스
+
+| 클래스 명     | 설명                                            |
+| ------------- | ----------------------------------------------- |
+| LocalDate     | 로컬 날짜 클래스                                |
+| LocalTime     | 로컬 시간 클래스                                |
+| LocalDateTime | 로컬 날짜 및 시간 클래스(LocalDate + LocalTime) |
+| ZonedDateTime | 특정 타임존(TimeZone)의 날짜와 시간 클래스      |
+| Instant       | 특정 시점의 Time-Stamp 클래스                   |
+
+<br/>
+
+##### 1.3.2 날짜와 시간에 대한 정보 얻기
+
+| 클래스        | 리턴 타입  | 메소드(매개 변수) | 설명                           |
+| ------------- | ---------- | ----------------- | ------------------------------ |
+| LocalDate     | int        | `getYear()`       | 년                             |
+| LocalDate     | Month      | `getMonth()`      | Month 열거값                   |
+| LocalDate     | int        | `getMonthValue()` | 월                             |
+| LocalDate     | int        | `getDayOfYear()`  | 일년의 몇 번째 일              |
+| LocalDate     | int        | `getDayOfMonth()` | 월의 몇 번째 일                |
+| LocalDate     | DayOfWeek  | `getDayOfWeek()`  | 요일                           |
+| LocalDate     | boolean    | `isLeapYear()`    | 윤년 여부                      |
+| LocalTime     | int        | `getHour()`       | 시간                           |
+| LocalTime     | int        | `getMinute()`     | 분                             |
+| LocalTime     | int        | `getSecond()`     | 초                             |
+| LocalTime     | int        | `getNano()`       | 나노초                         |
+| ZonedDateTime | ZoneId     | `getZone()`       | 존 아이디 리턴(ex: Asia/Seoul) |
+| ZonedDateTime | ZoneOffset | `getOffset()`     | 존 오프셋(시차) 리턴           |
+
+<br/>
+
+##### 1.3.3 날짜, 시간 조작
+
+- 더하기, 빼기
+
+| 클래스                                          | 리턴 타입                                       | 메소드(매개 변수)                                            | 설명                                                         |
+| ----------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| LocalDate<br />LocalDateTime<br />ZonedDateTime | LocalDate<br />LocalDateTime<br />ZonedDateTime | `minusYears(long)`<br />`minusMonths(long)`<br />`minusDays(long)`<br />`minusWeeks(long)`<br />`plusYears(long)`<br />`plusMonths(long)`<br />`plusWeeks(long)`<br />`plusDays(long)` | 년 빼기<br />달 빼기<br />일 빼기<br />주 빼기<br />년 더하기<br />달 더하기<br />주 더하기<br />일 더하기 |
+| LocalTime<br />LocalDateTime<br />ZonedDateTime | LocalTime<br />LocalDateTime<br />ZonedDateTime | `minusHours(long)`<br />`minusMinutes(long)`<br />`minusSeconds(long)`<br />`minusNanos(long)`<br />`plusHours(long)`<br />`plusMinutes(long)`<br />`plusSeconds(long)`<br />`plusNanos(long)` | 시간 빼기<br />분 빼기<br />초 빼기<br />나노초 빼기<br />시간 더하기<br />분 더하기<br />초 더하기<br />나노초 더하기 |
+
+<br/>
+
+- 변경하기
+  - '상대 변경'은 현재 날짜를 기준으로 상대적인 날짜를 리턴
+
+| 클래스                                          | 리턴 타입                                       | 메소드(매개 변수)                                            | 설명                                                         |
+| ----------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| LocalDate<br />LocalDateTime<br />ZonedDateTime | LocalDate<br />LocalDateTime<br />ZonedDateTime | `withYear(int)`<br />`withMonth(int)`<br />`withDayOfMonth(int)`<br />`withDayOfYear(int)`<br />`with(TemporalAdjuster adjuster)` | 년 변경<br />월 변경<br />월의 일 변경<br />년의 일 변경<br />상대 변경 |
+| LocalTime<br />LocalDateTime<br />ZonedDateTime | LocalTime<br />LocalDateTime<br />ZonedDateTime | `withHour(int)`<br />`withMinute(int)`<br />`withSecond(int)`<br />`withNano(int)` | 시간 변경<br />분 변경<br />초 변경<br />나노초 변경         |
+
+<br/>
+
+### 2. 컬렉션 프레임워크(Chapter 15)
+
+- 배열(Array)의 문제점을 해결하고 객체들을 효율적으로 추가, 삭제, 검색할 수 있도록 java.util 패키지에 컬렉션과 관련된 인터페이스와 클래스들을 포함시켜 놓은 것
+
+![image](https://user-images.githubusercontent.com/103157377/188152362-7af44184-4401-4a00-b99e-330561ff69f1.png)
+
+- 인터페이스별로 사용할 수 있는 컬렉션
+
+| 인터페이스 분류  | 특징                                               | 구현 클래스                             |
+| ---------------- | -------------------------------------------------- | --------------------------------------- |
+| Collection(List) | - 순서 유지하고 저장<br />- 중복 저장 가능         | ArrayList, Vector, LinkedList           |
+| Collection(Set)  | - 순서 유지하지 않고 저장<br />- 중복 저장 불가    | HashSet, TreeSet                        |
+| Map              | - Key, Value 쌍으로 저장<br />- Key 값은 중복 불가 | HashMap, Hashtable, TreeMap, Properties |
+
+<br/>
+
+#### 2.1 List 컬렉션
+
+- 객체를 인덱스로 관리, 자동 인덱스 부여
+- 인덱스로 객체 검색, 삭제 가능
+- 객체 자체를 저장하지 않고 객체의 번지를 참조
+- 동일한 객체 중복 저장 가능 &rarr; 동일 번지 참조
+- null 저장 가능 &rarr; 객체 참조 X
+
+​	![image](https://user-images.githubusercontent.com/103157377/188153899-21f0777a-4817-45dd-818e-8516a64558b7.png)
+
+- List 인터페이스의 공통 메소드
+
+| 기능 | 메소드                           | 설명                                             |
+| ---- | -------------------------------- | ------------------------------------------------ |
+| 추가 | boolean `add(E e)`               | 주어진 객체를 맨 끝에 추가                       |
+| 추가 | void `add(int index, E element)` | 주어진 인덱스에 객체 추가                        |
+| 추가 | E `set(int index, E element)     | 주어진 인덱스에 저장된 객체를 주어진 객체로 바꿈 |
+| 검색 | boolean `contains(Object o)`     | 주어진 객체가 저장되어 있는지 여부               |
+| 검색 | E `get(int index)`               | 주어진 인덱스에 저장된 객체 리턴                 |
+| 검색 | boolean `isEmpty()`              | 컬렉션이 비어 있는지 조사                        |
+| 검색 | int `size()`                     | 저장되어 있는 전체 객체 수 리턴                  |
+| 삭제 | void `clear()`                   | 저장된 모든 객체 삭제                            |
+| 삭제 | E `remove(int index)`            | 주어진 인덱스에 저장된 객체 삭제                 |
+| 삭제 | boolean `remove(Object o)`       | 주어진 객체 삭제                                 |
+
+<br />
+
+##### 2.1.1 ArrayList
+
+<br />
+
+##### 2.1.2 Vector
+
+<br />
+
+##### 2.1.3 LinkedList
+
+<br />
+
+#### 2.2 Set 컬렉션
+
+<br />
+
+##### 2.2.1 HashSet
+
+<br />
+
+#### 2.3 Map 컬렉션
+
+<br />
+
+##### 2.3.1 HashMap
+
+<br />
+
+##### 2.3.2 Hashtable
+
+<br />
+
+##### 2.3.3 Properties
+
+<br />
+
+#### 2.3 LIFO와 FIFO 컬렉션
+
+<br />
+
+##### 2.3.1 Stack
+
+<br />
+
+##### 2.3.2 Queue
+
+<br />
+
+### 3. 제네릭(Chapter 13)
+

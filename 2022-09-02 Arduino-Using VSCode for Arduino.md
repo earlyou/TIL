@@ -82,16 +82,16 @@
   {
   	"arduino.path": "C:/Program Files (x86)/Arduino",
   	"arduino.commandPath": "arduino_debug.exe",
-   	"arduino.logLevel": "info",
-  	"arduino.allowPDEFiletype": false,
-  	"arduino.enableUSBDetection": true,
-  	"arduino.disableTestingOpen": false,
-  	"arduino.skipHeaderProvider": false,
-  	"arduino.additionalUrls": [
+   	"arduino.logLevel": "info",
+  	"arduino.allowPDEFiletype": false,
+  	"arduino.enableUSBDetection": true,
+  	"arduino.disableTestingOpen": false,
+  	"arduino.skipHeaderProvider": false,
+  	"arduino.additionalUrls": [
   		"https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/master/package_azureboard_index.json",
   		"http://arduino.esp8266.com/stable/package_esp8266com_index.json"
   	],
-  	"arduino.defaultBaudRate": 115200
+  	"arduino.defaultBaudRate": 115200
   }
   ```
 
@@ -157,7 +157,7 @@
   
   void loop()                 // 무한 반복
   {
-  	digitalWrite(13,HIGH);  // 13번 핀에 5V 전압 설정
+  	  digitalWrite(13,HIGH);  // 13번 핀에 5V 전압 설정
       delay(500);             // 500ms 대기
       digitalWrite(13,LOW);   // 13번 핀 전류 차단
       delay(500);             // 500ms 대기

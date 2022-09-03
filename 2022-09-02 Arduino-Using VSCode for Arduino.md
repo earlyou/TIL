@@ -152,15 +152,15 @@
   ```c
   void setup()
   {
-  	pinMode(13,OUTPUT);     // 13번 핀 사용
+    pinMode(13,OUTPUT);     // 13번 핀 사용
   }
   
   void loop()                 // 무한 반복
   {
-  	  digitalWrite(13,HIGH);  // 13번 핀에 5V 전압 설정
-      delay(500);             // 500ms 대기
-      digitalWrite(13,LOW);   // 13번 핀 전류 차단
-      delay(500);             // 500ms 대기
+    digitalWrite(13,HIGH);  // 13번 핀에 5V 전압 설정
+    delay(500);             // 500ms 대기
+    digitalWrite(13,LOW);   // 13번 핀 전류 차단
+    delay(500);             // 500ms 대기
   }
   ```
 
